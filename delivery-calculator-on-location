@@ -1,0 +1,7 @@
+add_action('woocommerce_cart_calculate_fees', function() {    if (is_admin() && !defined('DOING_AJAX')) {        return;    }
+    $add_charges = array(            "TARIQ+ROAD" => 20    ,"SHAHRA-E-FAISAL" => 30    ,"BAHADURABAD" => 10    ,"II+CHANDIGARH+ROAD" => 50    ,"DHORAJI" => 100    ,"PECHS+BLOCK+1" => 50    ,"PECHS+BLOCK+2" => 50    ,"PECHS+BLOCK+3" => 50    ,"PECHS+BLOCK+4" => 50    ,"PECHS+BLOCK+5" => 60    ,"PECHS+BLOCK+6" => 70    ,"URDU+BAZAR" => 150    ,"SHAHEED–E-MILLAT+ROAD" => 350    ,"SHAHRAH-E-QUAIDEEN" => 40    ,"MUHAMMAD+ALI+SOCIETY" => 40    );
+//    $shipping_country = WC()->customer->get_shipping_country();//    echo $shipping_country;    $checkout_post_data = explode('&',$_POST['post_data']);
+    foreach ($checkout_post_data as $couple) {        list ($key, $val) = explode('=', $couple);        $checkout_post_data[$key] = $val;    }
+
+    WC()->cart->add_fee(__('Distance charges', 'txtdomain'), $add_charges[$checkout_post_data['areas']]);//    echo $checkout_post_data['areas'];
+});
